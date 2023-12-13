@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../db/db');
 const cors = require('cors');
-const { updateField } = require('./utils');
 
 const app = express();
 const port = 5000;
@@ -18,7 +17,7 @@ app.listen(port, () => {
   console.log(`App listening on port: ${port}`);
 });
 
-productRouter.post('/create', (req, res) => {
+productRouter.post('/', (req, res) => {
   const product = req.body;
   const newId = db.products[db.products.length - 1].id + 1;
 
@@ -32,7 +31,7 @@ productRouter.post('/create', (req, res) => {
 
 productRouter.get('/total', (req, res) => {
   res.status(200).json(db.total);
-}); 
+});
 
 productRouter.get('/pagination/:id', (req, res) => {
   const page = Number(req.params.id);
@@ -46,78 +45,6 @@ productRouter.get('/pagination/:id', (req, res) => {
   const data = db.products.slice(start, end);
 
   res.status(200).json(data);
-});
-
-productRouter.put('/title/:id', (req, res) => {
-  const { title } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, title);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
-});
-
-productRouter.put('/description/:id', (req, res) => {
-  const { description } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, description);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
-});
-
-productRouter.put('/price/:id', (req, res) => {
-  const { price } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, price);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
-});
-
-productRouter.put('/stock/:id', (req, res) => {
-  const { stock } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, stock);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
-});
-
-productRouter.put('/brand/:id', (req, res) => {
-  const { brand } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, brand);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
-});
-
-productRouter.put('/category/:id', (req, res) => {
-  const { category } = req.body;
-
-  const product = updateField(Number(req.params.id), req.path, category);
-
-  if (!product) {
-    res.status(400).json();
-  }
-
-  res.status(200).json(product);
 });
 
 productRouter.delete('/:id', (req, res) => {
@@ -138,7 +65,54 @@ productRouter.delete('/:id', (req, res) => {
     res.status(400).json();
   }
 
+  console.log('DETELETED');
+
   res.status(200).json(deleteProduct);
 });
 
+productRouter.put('/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const {
+    title,
+    description,
+    price,
+    discountPercentage,
+    rating,
+    stock,
+    brand,
+    category,
+  } = req.body;
+
+  //   if (!title && !description && !price && !discountPercentage && !rating && !stock && !bra)
+
+  for (const product of db.products) {
+    if (product.id === id) {
+      product.title = title ? title : product.title;
+      product.description = description ? description : product.description;
+      product.price = price ? price : product.price;
+      product.discountPercentage = discountPercentage
+        ? discountPercentage
+        : product.discountPercentage;
+      product.rating = rating ? rating : product.rating;
+      product.stock = stock ? stock : product.stock;
+      product.brand = brand ? brand : product.brand;
+      product.category = category ? category : product.category;
+      console.log(product);
+      return res.status(200).json(product);
+    }
+  }
+  res.status(400).json();
+});
+
+productRouter.get('/:id', (req, res) => {
+  const id = Number(req.params.id);
+
+  for (const product of db.products) {
+    if (product.id === id) {
+      return res.status(200).json(product);
+    }
+  }
+
+  res.status(400).json();
+});
 app.use('/products', productRouter);

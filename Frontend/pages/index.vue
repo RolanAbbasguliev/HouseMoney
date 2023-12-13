@@ -1,5 +1,8 @@
 <template>
-  <div class="container flex flex-col mx-auto px-2.5 h-screen">
+  <div
+    class="container flex flex-col mx-auto px-2.5 h-screen"
+    v-if="products.length > 0"
+  >
     <header class="header flex pt-10 gap-10 justify-center text-black">
       <select name="filter" class="filter p-4" v-model="filter">
         <option value="" selected disabled hidden>Search filter</option>
@@ -18,10 +21,16 @@
         :placeholder="placehodler"
       />
     </header>
-    <main class="main mx-auto flex flex-col items-center" v-if="products">
+    <main class="main mx-auto flex flex-col items-center">
       <div class="products flex flex-col gap-10 max-w-screen-xl mt-10">
-        <div class="product" v-for="product in filteredProducts">
-          <card :product="product"></card>
+        <div
+          class="product"
+          v-for="product in filteredProducts"
+          :key="product.id"
+        >
+          <NuxtLink :to="linkTo(product.id)">
+            <card :product="product"></card>
+          </NuxtLink>
         </div>
       </div>
       <div class="pagination mt-10 flex gap-10">
@@ -35,12 +44,15 @@
       </div>
     </main>
   </div>
+  <loading v-else></loading>
 </template>
 
 <script>
 import card from '~/components/Card/card.vue';
+import loading from '~/components/Loading/loading.vue';
+import cardView from '~/components/CardView/cardView.vue';
 export default {
-  components: [card],
+  components: [card, loading],
   data() {
     return {
       filter: 'title',
@@ -49,6 +61,12 @@ export default {
       products: [],
       query: '',
     };
+  },
+
+  methods: {
+    linkTo(id) {
+      return `/product/${id}`;
+    },
   },
 
   computed: {
