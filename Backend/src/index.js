@@ -65,8 +65,6 @@ productRouter.delete('/:id', (req, res) => {
     res.status(400).json();
   }
 
-  console.log('DETELETED');
-
   res.status(200).json(deleteProduct);
 });
 
@@ -97,7 +95,7 @@ productRouter.put('/:id', (req, res) => {
       product.stock = stock ? stock : product.stock;
       product.brand = brand ? brand : product.brand;
       product.category = category ? category : product.category;
-      console.log(product);
+
       return res.status(200).json(product);
     }
   }
