@@ -96,14 +96,14 @@ import type { Title } from '../../.nuxt/components'; import type loadingVue from
         type="submit"
         @click.prevent="submit"
       >
-        Сохранить
+        UPDATE
       </button>
       <button
         class="mt-5 text-2xl p-5 bg-rose-600"
         type="submit"
         @click.prevent="deleteProduct"
       >
-        Удалить
+        DELETE
       </button>
     </div>
   </form>
@@ -114,7 +114,9 @@ import type { Title } from '../../.nuxt/components'; import type loadingVue from
     <NuxtLink to="/">
       <button class="mt-5 text-4xl p-5">🏠</button>
     </NuxtLink>
-    <p class="text-center text-4xl text-emerald-600">Продукт успешно удален</p>
+    <p class="text-center text-4xl text-emerald-600 uppercase">
+      PRODUCT SUCCESSFULLY DELETED
+    </p>
   </div>
   <div
     class="flex items-center justify-center flex-col h-screen gap-20"
@@ -123,8 +125,8 @@ import type { Title } from '../../.nuxt/components'; import type loadingVue from
     <NuxtLink to="/">
       <button class="mt-5 text-4xl p-5">🏠</button>
     </NuxtLink>
-    <p class="text-center text-4xl text-emerald-600">
-      Продукт успешно обновлен
+    <p class="text-center text-4xl text-emerald-600 uppercase">
+      PRODUCT SUCCESSFULLY UPDATED
     </p>
   </div>
 </template>
@@ -162,7 +164,9 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(toRaw(this.newProduct)),
-      }).then((data) => (this.updated = true));
+      })
+        .then((data) => (this.updated = true))
+        .catch((err) => console.log(err));
       //   .catch((error) => console.log(error));
 
       e.preventDefault();
@@ -174,7 +178,9 @@ export default {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((data) => (this.deleted = true));
+      })
+        .then((data) => (this.deleted = true))
+        .catch((err) => console.log(err));
     },
   },
 };

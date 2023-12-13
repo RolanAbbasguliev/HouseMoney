@@ -4,7 +4,7 @@
     v-if="products.length > 0"
   >
     <header class="header flex pt-10 gap-10 justify-center text-black">
-      <select name="filter" class="filter p-4" v-model="filter">
+      <select name="filter" class="filter p-2" v-model="filter">
         <option value="" selected disabled hidden>Search filter</option>
         <option value="title" selected>title</option>
         <option value="description">description</option>
@@ -20,6 +20,9 @@
         v-model="query"
         :placeholder="placehodler"
       />
+      <NuxtLink to="createProduct">
+        <button class="bg-emerald-400 p-2 px-4">CREATE PRODUCT</button>
+      </NuxtLink>
     </header>
     <main class="main mx-auto flex flex-col items-center">
       <div class="products flex flex-col gap-10 max-w-screen-xl mt-10">
@@ -35,6 +38,7 @@
       </div>
       <div class="pagination mt-10 flex gap-10">
         <button
+          @click="updatePage(index)"
           class="pagination__btn text-xl border-solid bg-emerald-500 px-4 py-2"
           v-for="index in pagesNum"
           :key="index"
@@ -64,6 +68,14 @@ export default {
   },
 
   methods: {
+    updatePage(page) {
+      fetch(`http://localhost:5000/products/pagination/${page}`)
+        .then((res) => res.json())
+        .then((data) => {
+          this.products = data;
+        })
+        .catch((err) => console.log(err));
+    },
     linkTo(id) {
       return `/product/${id}`;
     },
