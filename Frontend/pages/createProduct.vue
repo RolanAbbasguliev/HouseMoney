@@ -96,7 +96,10 @@
         CREATE
       </button>
     </form>
-    <p class="text-center text-4xl text-emerald-600 mt-10 uppercase">
+    <p
+      v-if="created"
+      class="text-center text-4xl text-emerald-600 mt-10 uppercase"
+    >
       New product successfully created
     </p>
   </div>
@@ -118,15 +121,16 @@ export default {
         brand: '',
         category: '',
         thumbnail: '',
-        images: [],
+        images: '',
       },
     };
   },
   methods: {
     submit() {
-      this.newProduct.images = this.newProduct.images.split(',');
+      if (this.newProduct.images) {
+        this.newProduct.images = this.newProduct.images.split(',');
+      }
 
-      console.log(toRaw(this.newProduct));
       fetch(`http://localhost:5000/products`, {
         method: 'POST',
         headers: {

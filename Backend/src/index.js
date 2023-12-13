@@ -18,6 +18,31 @@ app.listen(port, () => {
 });
 
 productRouter.post('/', (req, res) => {
+  const {
+    title,
+    description,
+    price,
+    discountPercentage,
+    rating,
+    stock,
+    brand,
+    category,
+  } = req.body;
+
+  console.log(req.body);
+
+  if (
+    !title &&
+    !description &&
+    !price &&
+    !discountPercentage &&
+    !rating &&
+    !stock &&
+    !brand &&
+    !category
+  )
+    return res.status(400).json();
+
   const product = req.body;
   const newId = db.products[db.products.length - 1].id + 1;
 
