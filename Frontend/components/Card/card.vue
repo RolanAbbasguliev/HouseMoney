@@ -1,8 +1,15 @@
 <template>
   <div
-    class="card flex gap-10 max-w-screen-2xl hover:bg-emerald-900 p-10 cursor-pointer transition ease-in-out delay-10"
+    class="card flex gap-10 hover:bg-emerald-900 p-10 cursor-pointer transition ease-in-out delay-10"
   >
-    <img class="card__img" :src="product.thumbnail" :alt="product.thumbnail" />
+    <!-- <img class="card__img" :src="product.thumbnail" :alt="product.thumbnail" /> -->
+    <carousel
+      @click.prevent=""
+      :slides="product.images"
+      :interval="3000"
+      controls
+    ></carousel>
+
     <div class="card__info flex flex-col justify-between">
       <div class="card__info-title">Title: {{ product.title }}</div>
       <div class="card__info-description">
@@ -21,7 +28,10 @@
 </template>
 
 <script>
+import carousel from '~/components/Carousel/Carousel.vue';
 export default {
+  components: [carousel],
+
   props: {
     product: {},
   },

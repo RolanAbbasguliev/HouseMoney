@@ -118,12 +118,15 @@ export default {
         brand: '',
         category: '',
         thumbnail: '',
-        images: '',
+        images: [],
       },
     };
   },
   methods: {
     submit() {
+      this.newProduct.images = this.newProduct.images.split(',');
+
+      console.log(toRaw(this.newProduct));
       fetch(`http://localhost:5000/products`, {
         method: 'POST',
         headers: {

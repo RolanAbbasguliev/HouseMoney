@@ -36,7 +36,7 @@
           </NuxtLink>
         </div>
       </div>
-      <div class="pagination mt-10 flex gap-10">
+      <div class="pagination my-10 flex gap-10">
         <button
           @click="updatePage(index)"
           class="pagination__btn text-xl border-solid bg-emerald-500 px-4 py-2"
@@ -48,13 +48,14 @@
       </div>
     </main>
   </div>
+
   <loading v-else></loading>
 </template>
 
 <script>
 import card from '~/components/Card/card.vue';
 import loading from '~/components/Loading/loading.vue';
-import cardView from '~/components/CardView/cardView.vue';
+
 export default {
   components: [card, loading],
   data() {
