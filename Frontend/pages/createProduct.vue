@@ -131,7 +131,7 @@ export default {
         this.newProduct.images = this.newProduct.images.split(',');
       }
 
-      fetch(`http://localhost:5000/products`, {
+      fetch(`http://46.229.215.146:5000/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

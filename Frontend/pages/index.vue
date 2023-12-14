@@ -70,7 +70,7 @@ export default {
 
   methods: {
     updatePage(page) {
-      fetch(`http://localhost:5000/products/pagination/${page}`)
+      fetch(`http://46.229.215.146:5000/products/pagination/${page}`)
         .then((res) => res.json())
         .then((data) => {
           this.products = data;
@@ -98,11 +98,11 @@ export default {
   },
 
   mounted() {
-    fetch('http://localhost:5000/products/total')
+    fetch('http://46.229.215.146:5000/products/total')
       .then((res) => res.json())
       .then((data) => (this.pagesNum = Math.ceil(data / 10)));
 
-    fetch('http://localhost:5000/products/pagination/1')
+    fetch('http://46.229.215.146:5000/products/pagination/1')
       .then((res) => res.json())
       .then((data) => (this.products = data));
   },

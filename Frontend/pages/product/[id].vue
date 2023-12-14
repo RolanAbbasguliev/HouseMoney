@@ -16,7 +16,7 @@ export default {
   },
 
   mounted() {
-    fetch(`http://localhost:5000/products/${this.id}`)
+    fetch(`http://46.229.215.146:5000/products/${this.id}`)
       .then((res) => res.json())
       .then((data) => (this.product = data));
   },

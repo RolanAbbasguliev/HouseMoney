@@ -29,8 +29,6 @@ productRouter.post('/', (req, res) => {
     category,
   } = req.body;
 
-  console.log(req.body);
-
   if (
     !title &&
     !description &&

@@ -158,7 +158,7 @@ export default {
 
   methods: {
     submit() {
-      fetch(`http://localhost:5000/products/${this.id}`, {
+      fetch(`http://46.229.215.146:5000/products/${this.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ export default {
     },
 
     deleteProduct() {
-      fetch(`http://localhost:5000/products/${this.id}`, {
+      fetch(`http://46.229.215.146:5000/products/${this.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
